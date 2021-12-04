@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace WeatherApiSimple
+namespace WeatherApiUsingDto
 {
 	public class Program
 	{
@@ -34,19 +35,12 @@ namespace WeatherApiSimple
 
 			string jsonContent = await result.Content.ReadAsStringAsync();
 			JsonDocument jsonDocument = JsonDocument.Parse(jsonContent);
-			double kelvinDegrees = jsonDocument.RootElement
-				.GetProperty("main")
-				.GetProperty("temp")
-				.GetDouble();
+			var currentWeatherDto = jsonDocument.Deserialize<Root>();
 
-			int dateUnixTimeSeconds = jsonDocument.RootElement
-				.GetProperty("dt")
-				.GetInt32();
-
-			DateTimeOffset offsetUtc = DateTimeOffset.FromUnixTimeSeconds(dateUnixTimeSeconds);
+			DateTimeOffset offsetUtc = DateTimeOffset.FromUnixTimeSeconds(currentWeatherDto.dt);
 			DateTimeOffset offsetLocal = offsetUtc.ToLocalTime();
 
-			Console.WriteLine("Temp in celsius: {0}, date: {1}", KelvinToCelsius(kelvinDegrees), offsetLocal);
+			Console.WriteLine("Temp in celsius: {0}, date: {1}", KelvinToCelsius(currentWeatherDto.main.temp), offsetLocal);
 
 			return 0;
 		}

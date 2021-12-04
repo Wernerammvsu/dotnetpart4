@@ -1,4 +1,7 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace WeatherApiSimple
@@ -10,6 +13,7 @@ namespace WeatherApiSimple
 			const string city = "Voronezh";
 			const string apiKey = "7b6be55ecfc023f52792505653e8e278";
 
+			#region 1
 			var builder = new UriBuilder("https://api.openweathermap.org/data/2.5/weather");
 			var queryParameters = HttpUtility.ParseQueryString(builder.Query);
 			queryParameters["q"] = city;
@@ -20,6 +24,7 @@ namespace WeatherApiSimple
 			var client = new HttpClient();
 			HttpResponseMessage result = await client.SendAsync(request);
 			result.EnsureSuccessStatusCode();
+			#endregion
 
 			string jsonContent = await result.Content.ReadAsStringAsync();
 			JsonDocument jsonDocument = JsonDocument.Parse(jsonContent);
