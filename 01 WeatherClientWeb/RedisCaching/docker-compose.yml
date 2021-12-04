@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  # https://github.com/qishibo/AnotherRedisDesktopManager/releases/download/v1.5.0/Another-Redis-Desktop-Manager.1.5.0.exe
+  redis:
+    image: "redis:alpine3.15"
+    ports:
+      - 6379:6379
