@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using RedisCaching.Caching;
+using PostgresCaching.Caching;
 
 // Build application
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

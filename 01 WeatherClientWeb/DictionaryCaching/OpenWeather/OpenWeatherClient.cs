@@ -15,6 +15,7 @@ namespace WeatherClientWeb.OpenWeather
 		// Will be used later
 		// const string iconUrlTemplate = "http://openweathermap.org/img/w/{0}.png";
 
+		// H/W implement some InMemory absolute expiration caching
 		private readonly Dictionary<string, CurrentWeatherDto> _cache = new Dictionary<string, CurrentWeatherDto>();
 
 		public async ValueTask<CurrentWeatherDto> GetWeatherAsync(string cityName)

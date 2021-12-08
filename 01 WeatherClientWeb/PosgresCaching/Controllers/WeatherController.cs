@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RedisCaching.Caching;
+using PostgresCaching.Caching;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using WeatherClientWeb.OpenWeather;

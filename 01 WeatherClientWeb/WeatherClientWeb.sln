@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherClientDictionaryCach
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisCaching", "RedisCaching\RedisCaching.csproj", "{55183F44-8EFA-4018-A44E-883C2818927F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PosgresCaching", "PosgresCaching\PosgresCaching.csproj", "{72523614-1E3B-4240-9820-8E377CFD2F94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostgresCaching", "PosgresCaching\PostgresCaching.csproj", "{72523614-1E3B-4240-9820-8E377CFD2F94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

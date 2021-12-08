@@ -1,7 +1,6 @@
 version: "3.9"
 services:
-  # https://github.com/qishibo/AnotherRedisDesktopManager/releases/download/v1.5.0/Another-Redis-Desktop-Manager.1.5.0.exe
-  redis:
+  postgres:
     image: postgres:9.6-bullseye
     environment:
       - POSTGRES_PASSWORD=mysecretpassword

@@ -1,4 +1,4 @@
-﻿using RedisCaching.Caching;
+﻿using PostgresCaching.Caching;
 using System;
 using System.Net.Http;
 using System.Text.Json;

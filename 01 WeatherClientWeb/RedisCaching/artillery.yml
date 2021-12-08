@@ -1,0 +1,14 @@
+config:
+  target: "https://localhost:7175"
+  tls:
+    rejectUnauthorized: false
+  phases:
+    - duration: 1
+      arrivalRate: 1
+    - duration: 5
+      arrivalRate: 300
+scenarios:
+  - name: "Ask Voronezh"
+    flow:
+      - get:
+          url: "/weather?city=Voronezh"
