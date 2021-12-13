@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherClientWeb", "WeatherClientWeb\WeatherClientWeb.csproj", "{0AF66317-A4BF-488B-B2FD-CF2B3B178A44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherClientWebWithBindingsExample", "WeatherClientWeb\WeatherClientWebWithBindingsExample.csproj", "{0AF66317-A4BF-488B-B2FD-CF2B3B178A44}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherClientDictionaryCaching", "DictionaryCaching\WeatherClientDictionaryCaching.csproj", "{4716BD23-398A-4824-BE3C-296B973960A7}"
 EndProject

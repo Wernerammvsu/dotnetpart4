@@ -11,11 +11,7 @@ namespace PostgresCaching.Caching
 
 		public async Task<string> GetAsync(string key)
 		{
-			// Open connection
-			await using var connection = new NpgsqlConnection(ConnectionString);
-			await connection.OpenAsync();
-
-			await CheckTableAsync(connection);
+			NpgsqlConnection connection = await OpenConnectionAndCheckTableAsync();
 
 			using var cmd = new NpgsqlCommand("SELECT cacheValue FROM weather_cache WHERE cacheKey=@key", connection);
 			cmd.Parameters.AddWithValue("key", key);
@@ -27,10 +23,7 @@ namespace PostgresCaching.Caching
 
 		public async Task<bool> SetAsync(string key, string value)
 		{
-			// Open connection
-			await using var connection = new NpgsqlConnection(ConnectionString);
-			await connection.OpenAsync();
-			await CheckTableAsync(connection);
+			NpgsqlConnection connection = await OpenConnectionAndCheckTableAsync();
 
 			await using (var cmd = new NpgsqlCommand("INSERT INTO weather_cache (cacheKey, cacheValue) VALUES (@key, @value)", connection))
 			{
@@ -40,6 +33,16 @@ namespace PostgresCaching.Caching
 			}
 
 			return true;
+		}
+
+		private async Task<NpgsqlConnection> OpenConnectionAndCheckTableAsync()
+		{
+			// Open connection
+			var connection = new NpgsqlConnection(ConnectionString);
+			await connection.OpenAsync();
+
+			await CheckTableAsync(connection);
+			return connection;
 		}
 
 		private async Task CheckTableAsync(NpgsqlConnection npgsqlConnection)

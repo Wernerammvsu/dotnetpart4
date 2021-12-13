@@ -15,11 +15,11 @@ namespace WeatherClientWeb.OpenWeather
 		// Will be used later
 		// const string iconUrlTemplate = "http://openweathermap.org/img/w/{0}.png";
 
-		private PosgresDictionary _redisDictionary;
+		private PosgresDictionary _posgresDictionary;
 
 		public OpenWeatherClient(PosgresDictionary redisDictionary)
 		{
-			_redisDictionary = redisDictionary;
+			_posgresDictionary = redisDictionary;
 		}
 
 		public async ValueTask<CurrentWeatherDto> GetWeatherAsync(string cityName)
@@ -27,7 +27,7 @@ namespace WeatherClientWeb.OpenWeather
 			var lowerCasedCityName = cityName.ToLower();
 
 			// Check cache
-			var cachedValue = await _redisDictionary.GetAsync(lowerCasedCityName);
+			var cachedValue = await _posgresDictionary.GetAsync(lowerCasedCityName);
 			if (cachedValue != null)
 				return JsonSerializer.Deserialize<CurrentWeatherDto>(cachedValue);
 
@@ -39,7 +39,7 @@ namespace WeatherClientWeb.OpenWeather
 
 			var currentWeatherJson = await response.Content.ReadAsStringAsync();
 			var currentWeatherDto = JsonSerializer.Deserialize<CurrentWeatherDto>(currentWeatherJson);
-			await _redisDictionary.SetAsync(lowerCasedCityName, JsonSerializer.Serialize(currentWeatherDto));
+			await _posgresDictionary.SetAsync(lowerCasedCityName, JsonSerializer.Serialize(currentWeatherDto));
 			return currentWeatherDto;
 		}
 	}

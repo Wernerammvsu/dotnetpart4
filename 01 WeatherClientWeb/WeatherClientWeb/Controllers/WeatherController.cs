@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
+using WeatherClientWeb.Dto;
 using WeatherClientWeb.OpenWeather;
 
 namespace WeatherClientWeb.Controllers
@@ -18,6 +19,12 @@ namespace WeatherClientWeb.Controllers
 			CurrentWeatherDto currentWeatherDto = await openWeatherClient.GetWeatherAsync(cityName);
 
 			return Ok(currentWeatherDto);
+		}
+
+		[Route("user/{id}")]
+		public Task<ActionResult> AuthorGet([FromRoute]UserDto userDto, [FromQuery]int tid)
+		{
+			return Task.FromResult((ActionResult)Ok(userDto));
 		}
 	}
 }
