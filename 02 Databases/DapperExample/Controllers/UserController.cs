@@ -2,6 +2,8 @@
 using EFCoreExample.DataAccess.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace EFCoreExample.Controllers
@@ -26,6 +28,8 @@ namespace EFCoreExample.Controllers
 
 			_bookingContext.Users.Add(user);
 			await _bookingContext.SaveChangesAsync();
+
+			await _bookingContext.Bookings.Where(x => x.UserId == user.Id).FirstOrDefaultAsync();
 
 			return Ok(user);
 		}

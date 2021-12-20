@@ -1,12 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EFCoreExample.DataAccess.Entity
 {
 	public class User
 	{
 		public int Id { get; set; }
-
-		[Required]
 		public string UserName { get; set; }
+
+		public ICollection<Booking> Bookings { get; set; }
 	}
 }

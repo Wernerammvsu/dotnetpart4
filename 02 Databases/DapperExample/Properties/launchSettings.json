@@ -1,7 +1,6 @@
 {
   "profiles": {
     "WeatherClientWeb": {
-      "launchUrl": "weather?city=Voronezh",
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
