@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace EFCoreExample.DataAccess.Entity
 {
@@ -11,3 +10,4 @@ namespace EFCoreExample.DataAccess.Entity
 		public ICollection<Booking> Bookings { get; set; }
 	}
 }
+

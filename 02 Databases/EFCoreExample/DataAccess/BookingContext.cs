@@ -15,7 +15,28 @@ namespace EFCoreExample.DataAccess
 			modelBuilder.Entity<Booking>()
 				.HasOne(x => x.User)
 				.WithMany(u => u.Bookings)
-				.HasForeignKey(b => b.UserId);
+				.HasForeignKey(b => b.UserId)
+				.IsRequired(true);
+
+			modelBuilder.Entity<Booking>()
+				.Property(b => b.FromUtc)
+				.IsRequired(true);
+
+			modelBuilder.Entity<Booking>()
+				.Property(b => b.ToUtc)
+				.IsRequired(true);
+
+			/*
+			SELECT * FROM public."Bookings"
+			WHERE "FromUtc" > '2022-08-02 20:51:37+00'
+			vs
+			SELECT * FROM public."Bookings"
+			WHERE "Comment" like '%Пере%'
+			 */
+			modelBuilder.Entity<Booking>()
+				.HasIndex(b => b.FromUtc);
+			modelBuilder.Entity<Booking>()
+				.HasIndex(b => b.ToUtc);
 		}
 	}
 }
