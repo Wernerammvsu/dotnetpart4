@@ -11,6 +11,7 @@ namespace EFCoreExample.Controllers
 	public class UserController : Controller
 	{
 		private readonly BookingContext _bookingContext;
+		private readonly BookingContext _bookingContext1;
 
 		public UserController(BookingContext bookingContext)
 		{
