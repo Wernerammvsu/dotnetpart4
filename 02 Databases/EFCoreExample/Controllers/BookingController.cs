@@ -29,7 +29,7 @@ namespace EFCoreExample.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<BookingDto>> CreateBooking(BookingDto bookingDto)
+		public async Task<ActionResult<BookingDto>> CreateBooking([FromBody] BookingDto bookingDto)
 		{
 			if (string.IsNullOrEmpty(bookingDto.Username))
 				return BadRequest("Username cannot be empty");
