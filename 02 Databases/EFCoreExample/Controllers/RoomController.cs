@@ -47,6 +47,19 @@ namespace EFCoreExample.Controllers
                 .Select(rb => RoomDto.FromRoom(rb.Room))
                 .ToListAsync();
 
+            var roomWithBookingsIds = await _bookingContext
+                .RoomBookings
+                .Select(rb => rb.RoomId)
+                .ToListAsync();
+
+            var roomsWithNoBookings = await _bookingContext
+                .Rooms
+                .Where(r => !roomWithBookingsIds.Contains(r.Id))
+                .Select(r => RoomDto.FromRoom(r))
+                .ToListAsync();
+
+            freeRooms.AddRange(roomsWithNoBookings);
+
             return Ok(freeRooms);
         }
     }

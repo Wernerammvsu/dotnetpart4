@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EFCoreExample.DataAccess.Entity
 {
@@ -10,6 +11,7 @@ namespace EFCoreExample.DataAccess.Entity
 		public DateTime ToUtc { get; set; }
 		public int UserId { get; set; }
 		public User User { get; set; }
+        public ICollection<Room> Rooms { get; set; }
 
-	}
+    }
 }
