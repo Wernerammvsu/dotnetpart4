@@ -16,25 +16,13 @@ namespace EFCoreExample.Controllers
 	public class UserController : Controller
 	{
 		private readonly BookingContext _bookingContext;
-		private readonly IOptionsMonitor<DatabaseConfiguration> _databaseConfiguration;
 		private readonly ILogger<UserController> _logger;
 
-		private readonly IDisposable _congifChangedListener;
-
 		public UserController(BookingContext bookingContext,
-			IOptionsMonitor<DatabaseConfiguration> databaseConfiguration,
 			ILogger<UserController> logger)
 		{
 			_bookingContext = bookingContext;
-			_databaseConfiguration = databaseConfiguration;
 			_logger = logger;
-
-			_congifChangedListener = databaseConfiguration.OnChange(LogWarning);
-		}
-
-		private void LogWarning(DatabaseConfiguration arg1, string arg2)
-		{
-			_logger.LogWarning("Something has changed {arg1}, {arg2}", arg1, arg2);
 		}
 
 		public async Task<ActionResult<string[]>> GetAllUserNames()
