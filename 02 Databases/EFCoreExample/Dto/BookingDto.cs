@@ -31,7 +31,7 @@ namespace EFCoreExample.Dto
 				FromUtc = booking.FromUtc,
 				ToUtc = booking.ToUtc,
 				Username = booking.User.UserName,
-				RoomIds = booking.Rooms.Select(r => r.Id).ToArray()
+				RoomIds = booking.RoomBookings.Select(r => r.RoomId).ToArray()
 			};
 		}
 	}

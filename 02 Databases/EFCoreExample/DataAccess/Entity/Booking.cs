@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EFCoreExample.DataAccess.Entity
 {
-    public class Booking
+	public class Booking
 	{
 		public int Id { get; set; }
 		public string Comment { get; set; }
@@ -11,7 +11,7 @@ namespace EFCoreExample.DataAccess.Entity
 		public DateTime ToUtc { get; set; }
 		public int UserId { get; set; }
 		public User User { get; set; }
-        public ICollection<Room> Rooms { get; set; }
 
-    }
+		public ICollection<RoomBooking> RoomBookings { get; set; }
+	}
 }

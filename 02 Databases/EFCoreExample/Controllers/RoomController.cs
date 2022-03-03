@@ -41,28 +41,15 @@ namespace EFCoreExample.Controllers
 
         public async Task<ActionResult<IEnumerable<RoomDto>>> FindEmptyRoom(DateTime fromUtc, DateTime toUtc)
         {
-            var roomBookings = await _bookingContext
-                .RoomBookings
-                .Where(rb => rb.Booking.ToUtc <= fromUtc || rb.Booking.FromUtc >= toUtc)
-                .ToListAsync();
-
-            var freeRooms = roomBookings
-                .Select(rb => RoomDto.FromRoom(rb.Room))
-                .ToList();
-
-            var roomWithBookingsIds = await _bookingContext
-                .RoomBookings
-                .Select(rb => rb.RoomId)
-                .ToListAsync();
-
-            var roomsWithNoBookings = await _bookingContext
+            var freeRooms = await _bookingContext
                 .Rooms
-                .Where(r => !roomWithBookingsIds.Contains(r.Id))
-                .Select(r => RoomDto.FromRoom(r))
+                .Where(r =>
+                    !r.RoomBookings
+                    .Any(rb =>
+                        rb.Booking.ToUtc <= fromUtc
+                            || rb.Booking.FromUtc >= toUtc
+                        ))
                 .ToListAsync();
-
-            freeRooms.AddRange(roomsWithNoBookings);
-
             return Ok(freeRooms);
         }
     }
