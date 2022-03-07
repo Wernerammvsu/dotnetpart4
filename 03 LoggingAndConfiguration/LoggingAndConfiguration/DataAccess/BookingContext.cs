@@ -39,7 +39,6 @@ namespace EFCoreExample.DataAccess
 			modelBuilder.Entity<Booking>()
 				.HasIndex(b => b.ToUtc);
 
-
 			modelBuilder.Entity<User>()
 				.HasIndex(b => b.UserName);
 		}

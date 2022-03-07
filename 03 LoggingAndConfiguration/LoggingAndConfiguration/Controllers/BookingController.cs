@@ -3,6 +3,8 @@ using EFCoreExample.DataAccess.Entity;
 using EFCoreExample.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using MongoDbExample.Configuration;
 using System;
 using System.Linq;
 using System.Threading;
@@ -14,10 +16,14 @@ namespace EFCoreExample.Controllers
 	public class BookingController : Controller
 	{
 		private readonly BookingContext _bookingContext;
+		private readonly DatabaseConfiguration _databaseConfiguration;
 
-		public BookingController(BookingContext bookingContext)
+
+		public BookingController(BookingContext bookingContext,
+			IOptions<DatabaseConfiguration> options)
 		{
 			_bookingContext = bookingContext;
+			_databaseConfiguration = options.Value;
 		}
 		
 		[Route("{id}")]
@@ -65,7 +71,7 @@ namespace EFCoreExample.Controllers
 				return Conflict("Booking for this time has already been created");
 			if (newBooking.FromUtc < DateTime.UtcNow)
 				return BadRequest("Cannot have from date earlier than now");
-			if (newBooking.ToUtc - newBooking.FromUtc <= TimeSpan.FromMinutes(30))
+			if (newBooking.ToUtc - newBooking.FromUtc <= TimeSpan.FromMinutes(_databaseConfiguration.MinTimeSpanForBookingInMinutes))
 				return BadRequest("Booking period should be at lease 30 minutes long");
 
 			_bookingContext.Add(newBooking);

@@ -17,12 +17,15 @@ namespace EFCoreExample.Controllers
 	{
 		private readonly BookingContext _bookingContext;
 		private readonly ILogger<UserController> _logger;
+		private readonly DatabaseConfiguration _databaseConfiguration;
 
 		public UserController(BookingContext bookingContext,
-			ILogger<UserController> logger)
+			ILogger<UserController> logger, 
+			IOptions<DatabaseConfiguration> options)
 		{
 			_bookingContext = bookingContext;
 			_logger = logger;
+			_databaseConfiguration = options.Value;
 		}
 
 		public async Task<ActionResult<string[]>> GetAllUserNames()
@@ -35,6 +38,9 @@ namespace EFCoreExample.Controllers
 		[HttpPost]
 		public async Task<ActionResult<User>> CreateUser([FromBody]User user)
 		{
+			if (user.UserName.Length < _databaseConfiguration.UserNameMinLength)
+				return BadRequest($"User name length must be more than 5");
+
 			User userInDb = await _bookingContext
 				.Users
 				.FirstOrDefaultAsync(u => u.UserName == user.UserName);
