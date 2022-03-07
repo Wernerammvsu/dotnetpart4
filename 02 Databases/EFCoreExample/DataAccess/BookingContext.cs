@@ -9,8 +9,10 @@ namespace EFCoreExample.DataAccess
 
 		public DbSet<User> Users { get; set; }
 		public DbSet<Booking> Bookings { get; set; }
+		public DbSet<Room> Rooms { get; set; }
+		public DbSet<RoomBooking> RoomBookings { get; set; }
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<Booking>()
 				.HasOne(x => x.User)
@@ -37,6 +39,22 @@ namespace EFCoreExample.DataAccess
 				.HasIndex(b => b.FromUtc);
 			modelBuilder.Entity<Booking>()
 				.HasIndex(b => b.ToUtc);
+
+			modelBuilder.Entity<RoomBooking>()
+				.ToTable("RoomBooking");
+			modelBuilder.Entity<RoomBooking>()
+				.HasKey(rb => new { rb.RoomId, rb.BookingId });
+			modelBuilder.Entity<RoomBooking>()
+				.HasOne(rb => rb.Room)
+				.WithMany(r => r.RoomBookings)
+				.HasForeignKey(rb => rb.RoomId)
+				.IsRequired(true);
+			modelBuilder.Entity<RoomBooking>()
+				.HasOne(rb => rb.Booking)
+				.WithMany(b => b.RoomBookings)
+				.HasForeignKey(rb => rb.BookingId)
+				.IsRequired(true);
+
 		}
 	}
 }

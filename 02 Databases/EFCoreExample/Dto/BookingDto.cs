@@ -1,5 +1,7 @@
 ﻿using EFCoreExample.DataAccess.Entity;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EFCoreExample.Dto
 {
@@ -9,8 +11,8 @@ namespace EFCoreExample.Dto
 		public DateTime FromUtc { get; set; }
 		public DateTime ToUtc { get; set; }
 		public string Comment { get; set; }
-
-		public Booking ToBooking(int userId)
+        public IEnumerable<int> RoomIds { get; set; }
+        public Booking ToBooking(int userId)
 		{
 			return new Booking
 			{
@@ -28,7 +30,8 @@ namespace EFCoreExample.Dto
 				Comment = booking.Comment,
 				FromUtc = booking.FromUtc,
 				ToUtc = booking.ToUtc,
-				Username = booking.User.UserName
+				Username = booking.User.UserName,
+				RoomIds = booking.RoomBookings.Select(r => r.RoomId).ToArray()
 			};
 		}
 	}

@@ -29,7 +29,7 @@ namespace EFCoreExample.Controllers
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<BookingDto>> CreateBooking(BookingDto bookingDto)
+		public async Task<ActionResult<BookingDto>> CreateBooking([FromBody] BookingDto bookingDto)
 		{
 			if (string.IsNullOrEmpty(bookingDto.Username))
 				return BadRequest("Username cannot be empty");
@@ -64,6 +64,18 @@ namespace EFCoreExample.Controllers
 
 			_bookingContext.Add(newBooking);
 			await _bookingContext.SaveChangesAsync();
+
+			foreach (var roomId in bookingDto.RoomIds)
+            {
+				var roomBooking = new RoomBooking
+				{
+					RoomId = roomId,
+					BookingId = newBooking.Id
+				};
+				_bookingContext.Add(roomBooking);
+            }
+			await _bookingContext.SaveChangesAsync();
+
 			return Ok(BookingDto.FromBooking(newBooking));
 		}
 	}
