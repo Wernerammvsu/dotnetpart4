@@ -41,17 +41,19 @@ namespace EFCoreExample.DataAccess
 				.HasIndex(b => b.ToUtc);
 
 			modelBuilder.Entity<RoomBooking>()
+				.ToTable("RoomBooking");
+			modelBuilder.Entity<RoomBooking>()
 				.HasKey(rb => new { rb.RoomId, rb.BookingId });
-
 			modelBuilder.Entity<RoomBooking>()
 				.HasOne(rb => rb.Room)
-				.WithMany()
-				.HasForeignKey(rb => rb.RoomId);
-
+				.WithMany(r => r.RoomBookings)
+				.HasForeignKey(rb => rb.RoomId)
+				.IsRequired(true);
 			modelBuilder.Entity<RoomBooking>()
 				.HasOne(rb => rb.Booking)
-				.WithMany()
-				.HasForeignKey(rb => rb.BookingId);
+				.WithMany(b => b.RoomBookings)
+				.HasForeignKey(rb => rb.BookingId)
+				.IsRequired(true);
 
 		}
 	}
