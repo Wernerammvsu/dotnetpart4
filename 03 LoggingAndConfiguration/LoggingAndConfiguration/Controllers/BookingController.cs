@@ -16,14 +16,14 @@ namespace EFCoreExample.Controllers
 	public class BookingController : Controller
 	{
 		private readonly BookingContext _bookingContext;
-		private readonly DatabaseConfiguration _databaseConfiguration;
+		private readonly AppConfiguration _appConfiguration;
 
 
 		public BookingController(BookingContext bookingContext,
-			IOptions<DatabaseConfiguration> options)
+			IOptions<AppConfiguration> options)
 		{
 			_bookingContext = bookingContext;
-			_databaseConfiguration = options.Value;
+			_appConfiguration = options.Value;
 		}
 		
 		[Route("{id}")]
@@ -71,8 +71,8 @@ namespace EFCoreExample.Controllers
 				return Conflict("Booking for this time has already been created");
 			if (newBooking.FromUtc < DateTime.UtcNow)
 				return BadRequest("Cannot have from date earlier than now");
-			if (newBooking.ToUtc - newBooking.FromUtc <= TimeSpan.FromMinutes(_databaseConfiguration.MinTimeSpanForBookingInMinutes))
-				return BadRequest("Booking period should be at lease 30 minutes long");
+			if (newBooking.ToUtc - newBooking.FromUtc <= TimeSpan.FromMinutes(_appConfiguration.MinTimeSpanForBookingInMinutes))
+				return BadRequest($"Booking period should be at lease {_appConfiguration.MinTimeSpanForBookingInMinutes} minutes long");
 
 			_bookingContext.Add(newBooking);
 			await _bookingContext.SaveChangesAsync();

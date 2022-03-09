@@ -16,6 +16,8 @@ builder.Services.Configure<DatabaseConfiguration>(
 	builder.Configuration.GetSection("DatabaseConfiguration"));
 builder.Services.AddDbContext<BookingContext>((sc, options) =>
 	options.UseNpgsql(sc.GetService<IOptions<DatabaseConfiguration>>().Value.ConnectionString));
+builder.Services.Configure<AppConfiguration>(
+	builder.Configuration.GetSection("AppConfiguration"));
 
 // Logging
 builder.Host.UseSerilog((ctx, lc) => lc
