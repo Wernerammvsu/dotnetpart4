@@ -39,14 +39,20 @@ namespace EFCoreExample.Controllers
 		public async Task<ActionResult<User>> CreateUser([FromBody]User user)
 		{
 			if (user.UserName.Length < _appConfiguration.UserNameMinLength)
+			{
+				_logger.LogWarning("Provided username is less than {UserNameMinLength}", _appConfiguration.UserNameMinLength);
 				return BadRequest($"User name length must be more than {_appConfiguration.UserNameMinLength}");
+			}
 
 			User userInDb = await _bookingContext
 				.Users
 				.FirstOrDefaultAsync(u => u.UserName == user.UserName);
 
 			if (userInDb != null)
+			{
+				_logger.LogWarning("Provided user already exists");
 				return Conflict("User with this name already exists");
+			}
 
 			_bookingContext.Users.Add(user);
 			await _bookingContext.SaveChangesAsync();
