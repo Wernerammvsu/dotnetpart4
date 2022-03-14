@@ -16,7 +16,7 @@ namespace Booking.DataAccess.Test.Mapper
 		private readonly DateTime ToUtc = new DateTime(2022, 03, 10);
 
 		[Fact]
-		public void UsingxUnit()
+		public void MapsDaoToEntity()
 		{
 			var mapper = new BookingMapper();
 			var bookingDal = new BookingDAL
