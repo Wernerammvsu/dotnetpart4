@@ -21,19 +21,21 @@ public class BookingContext : DbContext
 	private static void ConfigureUser(ModelBuilder modelBuilder)
 	{
 		modelBuilder.Entity<User>()
-						.HasIndex(b => b.UserName);
+			.HasIndex(b => b.UserName);
 		modelBuilder.Entity<User>()
 			.Property(b => b.UserName)
-			.IsRequired();
+			.IsRequired()
+			.HasMaxLength(30);
 	}
 
 	private static void ConfigureRoom(ModelBuilder modelBuilder)
 	{
 		modelBuilder.Entity<Room>()
-						.HasIndex(b => b.RoomName);
+			.HasIndex(b => b.RoomName);
 		modelBuilder.Entity<Room>()
 			.Property(b => b.RoomName)
-			.IsRequired();
+			.IsRequired()
+            .HasMaxLength(30);
 	}
 
 	private static void ConfigureBooking(ModelBuilder modelBuilder)
@@ -61,5 +63,8 @@ public class BookingContext : DbContext
 			.HasIndex(b => b.FromUtc);
 		modelBuilder.Entity<Booking>()
 			.HasIndex(b => b.ToUtc);
+		modelBuilder.Entity<Booking>()
+			.Property(b => b.Comment)
+            .HasMaxLength(500);
 	}
 }

@@ -3,6 +3,8 @@ using DtoValidation.DataAccess.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using DtoValidation.Dto.V1;
+using System.Linq;
 
 namespace DtoValidation.Controllers.V2
 {
@@ -17,14 +19,18 @@ namespace DtoValidation.Controllers.V2
 			_bookingContext = bookingContext;
 		}
 
-		public async Task<ActionResult<Room[]>> GetAll()
+		public async Task<ActionResult<RoomDto[]>> GetAll()
 		{
-			return await _bookingContext.Rooms.Include(x => x.Bookings).ToArrayAsync();
+			var rooms = await _bookingContext.Rooms.Include(x => x.Bookings).ToArrayAsync();
+			return rooms.Select(r => RoomDto.FromRoom(r)).ToArray();
 		}
 
 		[HttpPost]
-		public async Task<ActionResult<Room>> CreateRoom(Room room)
+		public async Task<ActionResult<RoomDto>> CreateRoom(RoomDto roomDto)
 		{
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+			var room = roomDto.ToRoom();
 			Room? roomInDatabase = await _bookingContext
 				.Rooms
 				.FirstOrDefaultAsync(u => u.RoomName == room.RoomName);
@@ -35,7 +41,7 @@ namespace DtoValidation.Controllers.V2
 			_bookingContext.Rooms.Add(room);
 			await _bookingContext.SaveChangesAsync();
 
-			return Ok(room);
+			return Ok(RoomDto.FromRoom(room));
 		}
 	}
 }
