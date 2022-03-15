@@ -18,7 +18,7 @@ namespace DtoValidation.Dto.Mapping
 		}
 
 		//public Booking ToBooking(int userId)
-		//{
+		//{ 
 		//	if (!FromUtc.HasValue)
 		//		throw new ArgumentNullException("FromUtc");
 		//	if (!ToUtc.HasValue)
