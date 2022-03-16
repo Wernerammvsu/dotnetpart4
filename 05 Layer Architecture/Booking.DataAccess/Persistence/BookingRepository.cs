@@ -33,8 +33,8 @@ namespace Booking.Domain.Persistence
 				.Bookings
 				.FirstOrDefaultAsync(b =>
 					b.RoomId == roomId
-					&& b.FromUtc < toUtc
-					&& b.ToUtc > fromUtc);
+					&& b.FromUtc <= toUtc
+					&& b.ToUtc >= fromUtc);
 			if (booking is null)
 				return null;
 			return _bookingMapper.Map(booking);
