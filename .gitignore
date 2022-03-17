@@ -39,3 +39,4 @@ msbuild.wrn
 
 # Remove all local docker data
 docker-data/
+/03 LoggingAndConfiguration/LoggingAndConfiguration/appsettings.local.json

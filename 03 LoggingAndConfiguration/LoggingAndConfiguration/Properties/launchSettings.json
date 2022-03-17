@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "LoggingAndConfiguration": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:7175;http://localhost:5175",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:5175/user"
+    }
+  }
+}
