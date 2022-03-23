@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
+    <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
+    <!--Workaround for using a different project for migrations-->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BookingPlatform.Authentification\BookingPlatform.Authentification.csproj" />
+    <ProjectReference Include="..\BookingPlatform.Domain\BookingPlatform.Domain.csproj" />
+    <ProjectReference Include="..\BookingPlatform.DataAccess\BookingPlatform.DataAccess.csproj" />
+  </ItemGroup>
+
+</Project>
