@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "dotnet-ef": {
+      "version": "6.0.1",
+      "commands": [
+        "dotnet-ef"
+      ]
+    },
+    "dotnet-reportgenerator-globaltool": {
+      "version": "5.1.2",
+      "commands": [
+        "reportgenerator"
+      ]
+    },
+    "microsoft.dotnet-openapi": {
+      "version": "6.0.2",
+      "commands": [
+        "dotnet-openapi"
+      ]
+    }
+  }
+}
