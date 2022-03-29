@@ -5,6 +5,7 @@ using BookingPlatform.DataAccess.Persistence;
 using BookingPlatform.Domain;
 using BookingPlatform.Domain.Persistence;
 using BookingPlatform.Domain.Service;
+using BookingPlatform.Domain.Service.DomainException;
 using BookingPlatform.WebApi;
 using BookingPlatform.WebApi.Configuration;
 using BookingPlatform.WebApi.Dto.V2.Validation;
@@ -12,6 +13,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -71,19 +73,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 		op.TokenValidationParameters = new TokenValidationParameters
 		{
 			IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authOptions.SecretKey)),
-			ValidIssuer = authOptions.Issuer,
 			ValidateIssuerSigningKey = true,
+
+			ValidIssuer = authOptions.Issuer,
 			ValidateIssuer = true,
+
 			ValidateAudience = false,
 			// Allow to use seconds for expiration of token
 			// Required only when token lifetime less than 5 minutes
 			ClockSkew = TimeSpan.Zero
-		})
-	.AddCookie(options =>
-	{
-		options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-		options.SlidingExpiration = true;
-	});
+		});
 
 // Commands to add a migration and update the database
 // dotnet ef --project ..\BookingPlatform.DataAccess migrations add InitialCreate
@@ -96,17 +95,17 @@ var app = builder
 // Custom exception handling
 if (app.Environment.IsDevelopment())
 	app.UseDeveloperExceptionPage();
-else
+/*else
 	app.UseExceptionHandler(new ExceptionHandlerOptions
 	{
-		ExceptionHandler = ctx =>
+		ExceptionHandler = async ctx =>
 		{
 			var feature = ctx.Features.Get<IExceptionHandlerFeature>()!;
-			if (feature.Error is Exception)
-				ctx.Response.StatusCode = 202;
-			return Task.CompletedTask;
+			if (feature.Error is StatusCodedException statusCodedException)
+				ctx.Response.StatusCode = statusCodedException.StatusCode;
+			await ctx.Response.WriteAsync(feature.Error.Message);
 		}
-	});
+	});*/
 
 app.UseRouting();
 

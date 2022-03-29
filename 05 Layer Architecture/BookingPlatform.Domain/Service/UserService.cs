@@ -17,10 +17,10 @@ namespace BookingPlatform.Domain.Service
 
 		public async Task<User> CreateUserAsync(string username, string password)
 		{
-			string passwordHash = _passwordHasher.HashPassword(password);
 			User? userInDb = await _userRepository.FindByUsername(username);
 			if (userInDb is not null)
 				throw new Exception("Username is already taken");
+			string passwordHash = _passwordHasher.HashPassword(password);
 			return await _userRepository.CreateUserAsync(new User(username, passwordHash));
 		}
 

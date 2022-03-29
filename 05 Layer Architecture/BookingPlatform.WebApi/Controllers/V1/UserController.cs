@@ -73,12 +73,14 @@ public class UserController : Controller
 		{
 			Subject = new ClaimsIdentity(new Claim[]
 			{
-				new Claim(ClaimTypes.Name, user.Username.ToString()),
+				new Claim(ClaimTypes.Name, user.Username.ToString())
 			}),
+			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha512),
+			#region Dont look
+			Issuer = _authOptions.Issuer,
 			IssuedAt = DateTime.Now,
-			Expires = DateTime.Now.AddMinutes(60),
-			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKey), SecurityAlgorithms.HmacSha256Signature),
-			Issuer = _authOptions.Issuer
+			Expires = DateTime.Now.AddMinutes(60)
+			#endregion
 		};
 		var tokenHandler = new JwtSecurityTokenHandler();
 		var token = tokenHandler.CreateToken(tokenDescriptor);
