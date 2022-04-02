@@ -3,9 +3,9 @@ using BookingPlatform.Domain.Entity;
 
 namespace BookingPlatform.DataAccess.Mapper
 {
-    public interface IBookingMapper
+    public interface IRoomMapper
     {
-        Booking Map(BookingDAL bookingDAL);
-        BookingDAL Map(Booking booking);
+        Room Map(RoomDAL bookingDAL);
+        RoomDAL Map(Room booking);
     }
 }

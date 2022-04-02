@@ -1,10 +1,12 @@
-﻿namespace BookingPlatform.Domain.Service
+﻿using BookingPlatform.Domain.Entity;
+
+namespace BookingPlatform.Domain.Service
 {
-	public interface IBookingService
-	{
-		Task<IEnumerable<Entity.Booking>> FindBookingsByRoomIdAsync(int roomId);
-		Task<IEnumerable<Entity.Booking>> FindBookingsWithDefaultRoomAsync();
-		Task<Entity.Booking> CreateBookingAsync(Entity.Booking booking);
-		Task<IEnumerable<Entity.Booking>> FindAllActiveAsync();
-	}
+    public interface IBookingService
+    {
+        Task<IEnumerable<Booking>> FindBookingsByRoomIdAsync(int roomId);
+        Task<IEnumerable<Booking>> FindBookingsWithDefaultRoomAsync();
+        Task<Booking> CreateBookingAsync(Booking booking);
+        Task<IEnumerable<Booking>> FindAllActiveAsync();
+    }
 }
