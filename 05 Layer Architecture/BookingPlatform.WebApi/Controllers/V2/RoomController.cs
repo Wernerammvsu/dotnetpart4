@@ -1,41 +1,37 @@
-﻿using BookingPlatform.DataAccess;
-using BookingPlatform.DataAccess.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using BookingPlatform.Domain.Entity;
+using BookingPlatform.Domain.Service;
+using BookingPlatform.WebApi.Dto.V1;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.WebApi.Controllers.V2
 {
-	[ApiController]
-	[Route("v2/room")]
-	public class RoomController : Controller
-	{
-		private readonly BookingContext _bookingContext;
+    [ApiController]
+    [Route("v2/room")]
+    public class RoomController : Controller
+    {
+        private readonly IRoomService _roomService;
 
-		public RoomController(BookingContext bookingContext)
-		{
-			_bookingContext = bookingContext;
-		}
+        public RoomController(IRoomService roomService)
+        {
+            _roomService = roomService;
+        }
 
-		public async Task<ActionResult<RoomDAL[]>> GetAll()
-		{
-			return await _bookingContext.Rooms.Include(x => x.Bookings).ToArrayAsync();
-		}
+        public async Task<ActionResult<Room[]>> GetAll()
+        {
+            var rooms = await _roomService.GetAllRoomsWithBookingsAsync();
 
-		[HttpPost]
-		public async Task<ActionResult<RoomDAL>> CreateRoom(RoomDAL room)
-		{
-			RoomDAL? roomInDatabase = await _bookingContext
-				.Rooms
-				.FirstOrDefaultAsync(u => u.RoomName == room.RoomName);
+            return rooms.ToArray();
+        }
 
-			if (roomInDatabase != null)
-				return Conflict("User with this name already exists");
+        [HttpPost]
+        public async Task<ActionResult<Room>> CreateRoom([FromBody] RoomDto room)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-			_bookingContext.Rooms.Add(room);
-			await _bookingContext.SaveChangesAsync();
-
-			return Ok(room);
-		}
-	}
+            return await _roomService.CreateRoomAsync(room.ToRoom());
+        }
+    }
 }

@@ -2,9 +2,10 @@
 
 namespace BookingPlatform.Domain.Persistence
 {
-	public interface IUserRepository
-	{
-		Task<User?> FindByUsername(string username);
-		Task<User> CreateUserAsync(User user);
-	}
+    public interface IUserRepository
+    {
+        Task<User?> FindByUsername(string username);
+        Task<User> CreateUserAsync(User user);
+        Task<IEnumerable<User>> GetAllUsersAsync();
+    }
 }
