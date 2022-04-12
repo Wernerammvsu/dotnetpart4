@@ -18,7 +18,7 @@ namespace BookingPlatform.DataAccess.Mapper
             {
                 Id = roomDAL.Id,
                 RoomName = roomDAL.RoomName,
-                Bookings = roomDAL.Bookings?.Select(b => _bookingMapper.Map(b)).ToArray()
+                Bookings = roomDAL.Bookings.Select(b => _bookingMapper.Map(b)).ToArray()
             };
         }
 
@@ -28,7 +28,7 @@ namespace BookingPlatform.DataAccess.Mapper
             {
                 Id = room.Id,
                 RoomName = room.RoomName,
-                Bookings = room.Bookings?.Select(b => _bookingMapper.Map(b)).ToArray()
+                Bookings = room.Bookings.Select(b => _bookingMapper.Map(b)).ToArray()
             };
         }
     }

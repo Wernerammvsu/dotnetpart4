@@ -28,11 +28,6 @@ namespace BookingPlatform.DataAccess.Persistence
 
         public async Task<User?> FindByUsername(string username)
         {
-            if (username is null)
-            {
-                return null;
-            }
-
             var loweredUsername = username.ToLower();
             UserDAL? user = await _bookingContext.Users
                 .Where(u => u.Username.ToLower() == loweredUsername)

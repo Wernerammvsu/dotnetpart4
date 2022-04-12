@@ -12,12 +12,12 @@ namespace BookingPlatform.Domain.Service
             _roomRepository = roomRepository;
         }
 
-        public async Task<Room> FindRoomByIdAsync(int roomId)
+        public async Task<Room?> FindRoomByIdAsync(int roomId)
         {
             return await _roomRepository.FindRoomByIdAsync(roomId);
         }
 
-        public async Task<Room> FindRoomByNameAsync(string roomName)
+        public async Task<Room?> FindRoomByNameAsync(string roomName)
         {
             return await _roomRepository.FindRoomByNameAsync(roomName);
         }
@@ -29,6 +29,11 @@ namespace BookingPlatform.Domain.Service
 
         public async Task<Room> CreateRoomAsync(Room room)
         {
+            var roomInDatabase = await FindRoomByNameAsync(room.RoomName);
+
+            if (roomInDatabase != null)
+                throw new ArgumentException("Room with this name already exists");
+
             return await _roomRepository.CreateRoomAsync(room);
         }
     }

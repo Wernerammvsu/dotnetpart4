@@ -31,11 +31,6 @@ namespace BookingPlatform.WebApi.Controllers.V2
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var roomInDatabase = await _roomService.FindRoomByNameAsync(room.RoomName);
-
-            if (roomInDatabase != null)
-                return Conflict("Room with this name already exists");
-
             return await _roomService.CreateRoomAsync(room.ToRoom());
         }
     }
